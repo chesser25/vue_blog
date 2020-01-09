@@ -41,7 +41,7 @@
                             <td>{{post.content}}</td>
                             <td>{{post.status}}</td>
                             <td>{{post.tags}}</td>
-                            <td><a href="#" class="text-success" @click="showEditForm=true"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="#" class="text-success" @click="showEditForm=true; postToEdit=post;"><i class="fas fa-edit"></i></a></td>
                             <td><a href="#" class="text-danger" @click="showDeleteForm=true;postIdToDelete=post.id"><i class="fas fa-trash-alt"></i></a></td>
                         </tr>
                     </tbody>
@@ -49,15 +49,16 @@
             </div>
           </div>
       </div>
-      <PostForm v-if="showAddForm" @formClosed="addFormClosed" @updatePostsList="getAllPosts" @showResult="showResult" :formName="addFormTitle"/>
-      <PostForm v-if="showEditForm" @formClosed="editFormClosed" :formName="editFormTitle"/>
+      <AddPost v-if="showAddForm" @formClosed="addFormClosed" @updatePostsList="getAllPosts" @showResult="showResult"/>
+      <EditPost v-if="showEditForm" :postToEdit="postToEdit" @formClosed="editFormClosed"/>
       <DeleteForm v-if="showDeleteForm" :postIdToDelete="postIdToDelete" @updatePostsList="getAllPosts" @showResult="showResult" @formClosed="deleteFormClosed"/>
 
   </div>
 </template>
 
 <script>
-import PostForm from './components/PostForm.vue'
+import AddPost from './components/AddPost.vue'
+import EditPost from './components/EditPost.vue'
 import DeleteForm from './components/DeletePostForm.vue'
 import Alert from './components/Alert.vue'
 import axios from 'axios'
@@ -75,13 +76,13 @@ export default {
         showAddForm: false,
         showEditForm: false,
         showDeleteForm: false,
-        addFormTitle: "Add new post",
-        editFormTitle: "Edit post",
         posts: [],
-        postIdToDelete: ''
+        postIdToDelete: '',
+        postToEdit: {}
   }},
   components: {
-    PostForm,
+    AddPost,
+    EditPost,
     DeleteForm,
     Alert
   },
