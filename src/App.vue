@@ -100,7 +100,7 @@ export default {
       this.showDeleteForm = value;
     },
     getAllPosts(){
-        axios.get("http://localhost:81/blog/api/posts/readAll.php").then(response => {
+        axios.get("/api/posts/readAll.php").then(response => {
           if(response.data.error){
             this.isAlertVisible = true;
             this.errorMsg = response.data.message;

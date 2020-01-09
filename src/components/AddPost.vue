@@ -24,7 +24,7 @@ export default {
         formSubmit(e){
             e.preventDefault();
             let self = this;
-            axios.post('http://localhost:81/blog/api/posts/create.php', {
+            axios.post('/api/posts/create.php', {
                 title: this.title,
                 content: this.content,
                 tags: this.tags,
@@ -48,7 +48,7 @@ export default {
             this.$emit('showResult', data)
         },
         getPostStatuses(){
-            axios.get('http://localhost:81/blog/api/postStatuses/readAll.php')
+            axios.get('/api/postStatuses/readAll.php')
             .then(response => (this.statuses = response.data.data))
             .catch(function (error) {
                 alert(error);

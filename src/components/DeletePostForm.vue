@@ -40,7 +40,7 @@ export default {
         },
         deletePost(){
             let self = this;
-            axios.delete("http://localhost:81/blog/api/posts/delete.php", {
+            axios.delete("/api/posts/delete.php", {
                 data: {
                     'id': this.postIdToDelete
                 }
@@ -48,7 +48,6 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(function (response) {
-                console.log(response);
                 self.closeWindow();
                 self.updatePostsList();
                 self.showResult({ "message": response.data.message, "isError": false});
