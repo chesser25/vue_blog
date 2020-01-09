@@ -50,7 +50,7 @@
           </div>
       </div>
       <AddPost v-if="showAddForm" @formClosed="addFormClosed" @updatePostsList="getAllPosts" @showResult="showResult"/>
-      <EditPost v-if="showEditForm" :postToEdit="postToEdit" @formClosed="editFormClosed"/>
+      <EditPost v-if="showEditForm" :postToEdit="postToEdit" @formClosed="editFormClosed" @updatePostsList="getAllPosts" @showResult="showResult"/>
       <DeleteForm v-if="showDeleteForm" :postIdToDelete="postIdToDelete" @updatePostsList="getAllPosts" @showResult="showResult" @formClosed="deleteFormClosed"/>
 
   </div>

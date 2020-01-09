@@ -10,12 +10,12 @@ export default {
             content: '',
             tags: '',
             statuses: [],
-            currentStatus: 'Status',
+            currentStatusId: 1,
             formName: 'Add new post'
         }
     },
-    created: function(){
-        this.getPostStatuses();
+    created: async function(){
+        await this.getPostStatuses();
     },
     methods: {
         closeWindow () {
@@ -28,7 +28,7 @@ export default {
                 title: this.title,
                 content: this.content,
                 tags: this.tags,
-                status: this.currentStatus
+                status: this.currentStatusId
             }, {
                 headers: { 'Content-Type': 'application/json' }
             })

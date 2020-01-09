@@ -10,7 +10,7 @@ export default {
             content: '',
             tags: '',
             statuses: [],
-            currentStatus: 'Status',
+            currentStatusId: '',
             formName: 'Edit post'
         }
     },
@@ -20,11 +20,9 @@ export default {
             required: true
         }
     },
-    mounted: function(){
+    created: async function() {
+        await this.getPostStatuses();
         this.setData();
-    },
-    created: function(){
-        this.getPostStatuses();
     },
     methods: {
         closeWindow () {
@@ -33,11 +31,12 @@ export default {
         formSubmit(e){
             e.preventDefault();
             let self = this;
-            axios.post('/api/posts/create.php', {
+            axios.put('/api/posts/update.php', {
                 title: this.title,
                 content: this.content,
                 tags: this.tags,
-                status: this.currentStatus
+                status: this.currentStatusId,
+                id: this.postToEdit.id
             }, {
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -57,8 +56,11 @@ export default {
             this.$emit('showResult', data)
         },
         getPostStatuses(){
-            axios.get('/api/postStatuses/readAll.php')
-            .then(response => (this.statuses = response.data.data))
+            let self = this;
+            return axios.get('/api/postStatuses/readAll.php')
+            .then(function(response){
+                self.statuses = response.data.data;
+            })
             .catch(function (error) {
                 alert(error);
             });
@@ -66,7 +68,11 @@ export default {
         setData(){
             this.title = this.postToEdit.title;
             this.content = this.postToEdit.content;
-            this.currentStatus = this.postToEdit.status;
+            this.statuses.forEach(s => {
+                if(s.status === this.postToEdit.status){
+                    this.currentStatusId = s.id;
+                }
+            });
             this.tags = this.postToEdit.tags;
         }
     }
